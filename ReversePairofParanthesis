@@ -1,0 +1,42 @@
+#include<stdio.h>
+#include<string.h>
+int top = -1;
+char stack[100];
+
+void push(char ele){
+    stack[++top] = ele;   
+}
+
+char pop(){
+    char ele = stack[top--];
+    return ele;
+}
+//When a single ')' paranthesis is encountered, we pop the stack until a single '(' paranthesis is encountered and 
+//then push into stack so that the substring is reversed
+int main(){
+    char str[100];
+    scanf("%s",str);
+    for(int i=0; str[i]!='\0'; i++){ 
+		if(str[i] == '('){
+        	int k=0; char sub[50];
+        	while(stack[top]!='('){
+             	sub[k] = pop();
+             	k++;
+        	}
+        	pop(); 
+        	for(int j=0; sub[j]!='\0'; j++)
+            	push(sub[j]);
+		}
+        else 
+            push(str[i]);
+    }
+    char sub[50];
+    int k=0;
+    while(top!=-1){
+        sub[k] = pop();
+        k++;
+    }
+    for(int j=strlen(sub)-1; j>=0; j--)
+        printf("%c",sub[j]);
+    return 0;
+}
